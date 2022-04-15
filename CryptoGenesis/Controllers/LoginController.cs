@@ -23,6 +23,9 @@ namespace CryptoGenesis.Controllers
             {
                 using (var entity = new CryptoGenesisEntities())
                 {
+                    if ((from c in entity.ConfigGeneral select c).FirstOrDefault()?.MaintenanceMode ?? true)
+                        return Json(Helpers.StandarError("Server in maintenance. Please, try later."));
+
                     var allowedVersion = (from c in entity.ConfigGeneral select c).FirstOrDefault().AllowedVersion;
 
 

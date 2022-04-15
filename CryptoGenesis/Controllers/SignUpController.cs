@@ -31,6 +31,9 @@ namespace CryptoGenesis.Controllers
             {
                 using (var entity = new CryptoGenesisEntities())
                 {
+                    if ((from c in entity.ConfigGeneral select c).FirstOrDefault()?.MaintenanceMode ?? true)
+                        return Json(Helpers.StandarError("Server in maintenance. Please, try later."));
+
                     User usr = new User
                     {
                         Username = request.Username,
