@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Text;
 using System.Web.Mvc;
 using CryptoGenesis.Models;
-using System.Security.Cryptography;
 
 namespace CryptoGenesis.Controllers
 {
@@ -28,10 +26,11 @@ namespace CryptoGenesis.Controllers
                     var allowedVersion = (from c in entity.ConfigGeneral select c).FirstOrDefault().AllowedVersion;
 
 
-                    if (pKey != Helpers.ComputeHash386(pPassword + allowedVersion)) return Json(new LoginResponse
+                    if (pKey != Helpers.ComputeHash386(pPassword + allowedVersion)) 
+                        return Json(new LoginResponse
                     {
-                        successfully = false,
-                        response = "Please, update the application.",
+                        OperationSuccessfully = false,
+                        response = "Please update the application.",
                         token = null
                     });
 
@@ -41,14 +40,15 @@ namespace CryptoGenesis.Controllers
                                 where (u.Email == pUser || u.Username == pUser) && u.Password == pswHash
                                 select u).FirstOrDefault();
 
-                    if (user == null) return Json(new LoginResponse
+                    if (user == null) 
+                        return Json(new LoginResponse
                     {
-                        successfully = false,
+                        OperationSuccessfully = false,
                         response = "Wrong username or password.",
                         token = null
                     });
 
-                    var token = Helpers.GenerateToken();
+                    var token = Helpers.GenerateByteArrayHex(32);
 
                     entity.SessionToken.Add(new SessionToken
                     {
@@ -61,7 +61,7 @@ namespace CryptoGenesis.Controllers
 
                     return Json(new LoginResponse
                     {
-                        successfully = true,
+                        OperationSuccessfully = true,
                         response = "",
                         token = token
                     });
@@ -70,19 +70,12 @@ namespace CryptoGenesis.Controllers
 
             catch(Exception)
             {
-                return Json(new LoginResponse
-                {
-                    successfully = false,
-                    response = "Internal server error.",
-                    token = null
-                });
+                return Json(Helpers.ServerError());
             }
         }
 
-        private class LoginResponse 
+        private class LoginResponse : StandartResponse
         { 
-            public bool successfully { get; set; }
-            public string response { get; set; }
             public string token { get; set; }
         }
     }
