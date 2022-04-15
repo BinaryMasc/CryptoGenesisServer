@@ -1,0 +1,689 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CryptoGenesisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdProcess">
+          <Key>
+            <PropertyRef Name="AdProcessId" />
+          </Key>
+          <Property Name="AdProcessId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AdProcessTypeId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.AdProcessDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AdProcessDetail">
+          <Key>
+            <PropertyRef Name="RowId" />
+            <PropertyRef Name="AdProcessId" />
+            <PropertyRef Name="AdProcessTypeDetailId" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="RowId" Type="int" Nullable="false" />
+          <Property Name="AdProcessId" Type="bigint" Nullable="false" />
+          <Property Name="AdProcessTypeDetailId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AdProcessType">
+          <Key>
+            <PropertyRef Name="AdProcessTypeId" />
+          </Key>
+          <Property Name="AdProcessTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdProcessTypeName" Type="varchar" MaxLength="30" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AdProcessTypeDetail">
+          <Key>
+            <PropertyRef Name="AdProcessTypeDetailId" />
+          </Key>
+          <Property Name="AdProcessTypeDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdProcessTypeDetailName" Type="varchar" MaxLength="30" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigGeneral' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ConfigGeneral">
+          <Key>
+            <PropertyRef Name="AllowedVersion" />
+          </Key>
+          <Property Name="AllowedVersion" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ConfigReward">
+          <Key>
+            <PropertyRef Name="CurrStandarRewardPerAdTether" />
+            <PropertyRef Name="CurrStandarRewardPerAdDalion" />
+            <PropertyRef Name="MinTimeStandarReward" />
+            <PropertyRef Name="MinWithdrawalAmountTether" />
+            <PropertyRef Name="MinWithdrawalAmountDalion" />
+            <PropertyRef Name="RewardByReferredPercent" />
+          </Key>
+          <Property Name="CurrStandarRewardPerAdTether" Type="money" Nullable="false" />
+          <Property Name="CurrStandarRewardPerAdDalion" Type="money" Nullable="false" />
+          <Property Name="MinTimeStandarReward" Type="int" Nullable="false" />
+          <Property Name="MinWithdrawalAmountTether" Type="money" Nullable="false" />
+          <Property Name="MinWithdrawalAmountDalion" Type="money" Nullable="false" />
+          <Property Name="RewardByReferredPercent" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SessionToken">
+          <Key>
+            <PropertyRef Name="SessionTokenId" />
+          </Key>
+          <Property Name="SessionTokenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="TokenString" Type="varchar" MaxLength="96" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="96" Nullable="false" />
+          <Property Name="UserType" Type="int" Nullable="false" />
+          <Property Name="ReferredCode" Type="varchar" MaxLength="10" />
+          <Property Name="AffiliatedBy" Type="int" />
+          <Property Name="EmailVerified" Type="bit" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wallet">
+          <Key>
+            <PropertyRef Name="WalletId" />
+          </Key>
+          <Property Name="WalletId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CurrencyId" Type="varchar" MaxLength="5" />
+          <Property Name="Balance" Type="money" Nullable="false" />
+          <Property Name="FreezeBalance" Type="money" Nullable="false" />
+          <Property Name="Credit" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Withdrawal">
+          <Key>
+            <PropertyRef Name="WithdrawalId" />
+          </Key>
+          <Property Name="WithdrawalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WalletId" Type="int" Nullable="false" />
+          <Property Name="CurrencyId" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AdProcess__AdPro__693CA210">
+          <End Role="AdProcessType" Type="Self.AdProcessType" Multiplicity="1" />
+          <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdProcessType">
+              <PropertyRef Name="AdProcessTypeId" />
+            </Principal>
+            <Dependent Role="AdProcess">
+              <PropertyRef Name="AdProcessTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdProcess__AdPro__6B24EA82">
+          <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="1" />
+          <End Role="AdProcessDetail" Type="Self.AdProcessDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdProcess">
+              <PropertyRef Name="AdProcessId" />
+            </Principal>
+            <Dependent Role="AdProcessDetail">
+              <PropertyRef Name="AdProcessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdProcess__AdPro__6C190EBB">
+          <End Role="AdProcessTypeDetail" Type="Self.AdProcessTypeDetail" Multiplicity="1" />
+          <End Role="AdProcessDetail" Type="Self.AdProcessDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdProcessTypeDetail">
+              <PropertyRef Name="AdProcessTypeDetailId" />
+            </Principal>
+            <Dependent Role="AdProcessDetail">
+              <PropertyRef Name="AdProcessTypeDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdProcess__UserI__68487DD7">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AdProcess">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SessionTo__UserI__5FB337D6">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SessionToken" Type="Self.SessionToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="SessionToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__Affiliated__5441852A">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User1" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="AffiliatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wallet__UserId__59FA5E80">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Wallet" Type="Self.Wallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Wallet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Withdrawa__Walle__5CD6CB2B">
+          <End Role="Wallet" Type="Self.Wallet" Multiplicity="1" />
+          <End Role="Withdrawal" Type="Self.Withdrawal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wallet">
+              <PropertyRef Name="WalletId" />
+            </Principal>
+            <Dependent Role="Withdrawal">
+              <PropertyRef Name="WalletId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CryptoGenesisModelStoreContainer">
+          <EntitySet Name="AdProcess" EntityType="Self.AdProcess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdProcessType" EntityType="Self.AdProcessType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdProcessTypeDetail" EntityType="Self.AdProcessTypeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SessionToken" EntityType="Self.SessionToken" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wallet" EntityType="Self.Wallet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Withdrawal" EntityType="Self.Withdrawal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdProcessDetail" EntityType="Self.AdProcessDetail" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AdProcessDetail].[RowId] AS [RowId], 
+    [AdProcessDetail].[AdProcessId] AS [AdProcessId], 
+    [AdProcessDetail].[AdProcessTypeDetailId] AS [AdProcessTypeDetailId], 
+    [AdProcessDetail].[Amount] AS [Amount], 
+    [AdProcessDetail].[Date] AS [Date]
+    FROM [dbo].[AdProcessDetail] AS [AdProcessDetail]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ConfigGeneral" EntityType="Self.ConfigGeneral" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ConfigGeneral].[AllowedVersion] AS [AllowedVersion]
+    FROM [dbo].[ConfigGeneral] AS [ConfigGeneral]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ConfigReward" EntityType="Self.ConfigReward" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ConfigReward].[CurrStandarRewardPerAdTether] AS [CurrStandarRewardPerAdTether], 
+    [ConfigReward].[CurrStandarRewardPerAdDalion] AS [CurrStandarRewardPerAdDalion], 
+    [ConfigReward].[MinTimeStandarReward] AS [MinTimeStandarReward], 
+    [ConfigReward].[MinWithdrawalAmountTether] AS [MinWithdrawalAmountTether], 
+    [ConfigReward].[MinWithdrawalAmountDalion] AS [MinWithdrawalAmountDalion], 
+    [ConfigReward].[RewardByReferredPercent] AS [RewardByReferredPercent]
+    FROM [dbo].[ConfigReward] AS [ConfigReward]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__AdProcess__AdPro__693CA210" Association="Self.FK__AdProcess__AdPro__693CA210">
+            <End Role="AdProcessType" EntitySet="AdProcessType" />
+            <End Role="AdProcess" EntitySet="AdProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdProcess__AdPro__6B24EA82" Association="Self.FK__AdProcess__AdPro__6B24EA82">
+            <End Role="AdProcess" EntitySet="AdProcess" />
+            <End Role="AdProcessDetail" EntitySet="AdProcessDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdProcess__AdPro__6C190EBB" Association="Self.FK__AdProcess__AdPro__6C190EBB">
+            <End Role="AdProcessTypeDetail" EntitySet="AdProcessTypeDetail" />
+            <End Role="AdProcessDetail" EntitySet="AdProcessDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdProcess__UserI__68487DD7" Association="Self.FK__AdProcess__UserI__68487DD7">
+            <End Role="User" EntitySet="User" />
+            <End Role="AdProcess" EntitySet="AdProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SessionTo__UserI__5FB337D6" Association="Self.FK__SessionTo__UserI__5FB337D6">
+            <End Role="User" EntitySet="User" />
+            <End Role="SessionToken" EntitySet="SessionToken" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__Affiliated__5441852A" Association="Self.FK__User__Affiliated__5441852A">
+            <End Role="User" EntitySet="User" />
+            <End Role="User1" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wallet__UserId__59FA5E80" Association="Self.FK__Wallet__UserId__59FA5E80">
+            <End Role="User" EntitySet="User" />
+            <End Role="Wallet" EntitySet="Wallet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Withdrawa__Walle__5CD6CB2B" Association="Self.FK__Withdrawa__Walle__5CD6CB2B">
+            <End Role="Wallet" EntitySet="Wallet" />
+            <End Role="Withdrawal" EntitySet="Withdrawal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CryptoGenesisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdProcess">
+          <Key>
+            <PropertyRef Name="AdProcessId" />
+          </Key>
+          <Property Name="AdProcessId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AdProcessTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AdProcessType" Relationship="Self.FK__AdProcess__AdPro__6754599E" FromRole="AdProcess" ToRole="AdProcessType" />
+          <NavigationProperty Name="AdProcessDetail" Relationship="Self.FK__AdProcess__AdPro__693CA210" FromRole="AdProcess" ToRole="AdProcessDetail" />
+          <NavigationProperty Name="User" Relationship="Self.FK__AdProcess__UserI__66603565" FromRole="AdProcess" ToRole="User" />
+        </EntityType>
+        <EntityType Name="AdProcessType">
+          <Key>
+            <PropertyRef Name="AdProcessTypeId" />
+          </Key>
+          <Property Name="AdProcessTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdProcessTypeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdProcess" Relationship="Self.FK__AdProcess__AdPro__6754599E" FromRole="AdProcessType" ToRole="AdProcess" />
+        </EntityType>
+        <EntityType Name="AdProcessTypeDetail">
+          <Key>
+            <PropertyRef Name="AdProcessTypeDetailId" />
+          </Key>
+          <Property Name="AdProcessTypeDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdProcessTypeDetailName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdProcessDetail" Relationship="Self.FK__AdProcess__AdPro__6A30C649" FromRole="AdProcessTypeDetail" ToRole="AdProcessDetail" />
+        </EntityType>
+        <EntityType Name="SessionToken">
+          <Key>
+            <PropertyRef Name="SessionTokenId" />
+          </Key>
+          <Property Name="SessionTokenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="TokenString" Type="String" MaxLength="96" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__SessionTo__UserI__5DCAEF64" FromRole="SessionToken" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="96" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserType" Type="Int32" Nullable="false" />
+          <Property Name="ReferredCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AffiliatedBy" Type="Int32" />
+          <Property Name="EmailVerified" Type="Boolean" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AdProcess" Relationship="Self.FK__AdProcess__UserI__66603565" FromRole="User" ToRole="AdProcess" />
+          <NavigationProperty Name="SessionToken" Relationship="Self.FK__SessionTo__UserI__5DCAEF64" FromRole="User" ToRole="SessionToken" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__User__Affiliated__534D60F1" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="User2" Relationship="Self.FK__User__Affiliated__534D60F1" FromRole="User1" ToRole="User" />
+          <NavigationProperty Name="Wallet" Relationship="Self.FK__Wallet__UserId__5812160E" FromRole="User" ToRole="Wallet" />
+        </EntityType>
+        <EntityType Name="Wallet">
+          <Key>
+            <PropertyRef Name="WalletId" />
+          </Key>
+          <Property Name="WalletId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CurrencyId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="FreezeBalance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Wallet__UserId__5812160E" FromRole="Wallet" ToRole="User" />
+          <NavigationProperty Name="Withdrawal" Relationship="Self.FK__Withdrawa__Walle__5AEE82B9" FromRole="Wallet" ToRole="Withdrawal" />
+          <Property Name="Credit" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Withdrawal">
+          <Key>
+            <PropertyRef Name="WithdrawalId" />
+          </Key>
+          <Property Name="WithdrawalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WalletId" Type="Int32" Nullable="false" />
+          <Property Name="CurrencyId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Wallet" Relationship="Self.FK__Withdrawa__Walle__5AEE82B9" FromRole="Withdrawal" ToRole="Wallet" />
+        </EntityType>
+        <EntityType Name="AdProcessDetail">
+          <Key>
+            <PropertyRef Name="RowId" />
+            <PropertyRef Name="AdProcessId" />
+            <PropertyRef Name="AdProcessTypeDetailId" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="RowId" Type="Int32" Nullable="false" />
+          <Property Name="AdProcessId" Type="Int64" Nullable="false" />
+          <Property Name="AdProcessTypeDetailId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AdProcess" Relationship="Self.FK__AdProcess__AdPro__693CA210" FromRole="AdProcessDetail" ToRole="AdProcess" />
+          <NavigationProperty Name="AdProcessTypeDetail" Relationship="Self.FK__AdProcess__AdPro__6A30C649" FromRole="AdProcessDetail" ToRole="AdProcessTypeDetail" />
+        </EntityType>
+        <EntityType Name="ConfigReward">
+          <Key>
+            <PropertyRef Name="CurrStandarRewardPerAdTether" />
+            <PropertyRef Name="CurrStandarRewardPerAdDalion" />
+            <PropertyRef Name="MinTimeStandarReward" />
+            <PropertyRef Name="MinWithdrawalAmountTether" />
+            <PropertyRef Name="MinWithdrawalAmountDalion" />
+            <PropertyRef Name="RewardByReferredPercent" />
+          </Key>
+          <Property Name="CurrStandarRewardPerAdTether" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CurrStandarRewardPerAdDalion" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="MinTimeStandarReward" Type="Int32" Nullable="false" />
+          <Property Name="MinWithdrawalAmountTether" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="MinWithdrawalAmountDalion" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="RewardByReferredPercent" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AdProcess__AdPro__6754599E">
+          <End Role="AdProcessType" Type="Self.AdProcessType" Multiplicity="1" />
+          <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdProcessType">
+              <PropertyRef Name="AdProcessTypeId" />
+            </Principal>
+            <Dependent Role="AdProcess">
+              <PropertyRef Name="AdProcessTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdProcess__AdPro__693CA210">
+          <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="1" />
+          <End Role="AdProcessDetail" Type="Self.AdProcessDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdProcess">
+              <PropertyRef Name="AdProcessId" />
+            </Principal>
+            <Dependent Role="AdProcessDetail">
+              <PropertyRef Name="AdProcessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdProcess__UserI__66603565">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AdProcess">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdProcess__AdPro__6A30C649">
+          <End Role="AdProcessTypeDetail" Type="Self.AdProcessTypeDetail" Multiplicity="1" />
+          <End Role="AdProcessDetail" Type="Self.AdProcessDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdProcessTypeDetail">
+              <PropertyRef Name="AdProcessTypeDetailId" />
+            </Principal>
+            <Dependent Role="AdProcessDetail">
+              <PropertyRef Name="AdProcessTypeDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SessionTo__UserI__5DCAEF64">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SessionToken" Type="Self.SessionToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="SessionToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__Affiliated__534D60F1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User1" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="AffiliatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wallet__UserId__5812160E">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Wallet" Type="Self.Wallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Wallet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Withdrawa__Walle__5AEE82B9">
+          <End Role="Wallet" Type="Self.Wallet" Multiplicity="1" />
+          <End Role="Withdrawal" Type="Self.Withdrawal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wallet">
+              <PropertyRef Name="WalletId" />
+            </Principal>
+            <Dependent Role="Withdrawal">
+              <PropertyRef Name="WalletId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CryptoGenesisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdProcess" EntityType="Self.AdProcess" />
+          <EntitySet Name="AdProcessType" EntityType="Self.AdProcessType" />
+          <EntitySet Name="AdProcessTypeDetail" EntityType="Self.AdProcessTypeDetail" />
+          <EntitySet Name="SessionToken" EntityType="Self.SessionToken" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Wallet" EntityType="Self.Wallet" />
+          <EntitySet Name="Withdrawal" EntityType="Self.Withdrawal" />
+          <EntitySet Name="AdProcessDetail" EntityType="Self.AdProcessDetail" />
+          <EntitySet Name="ConfigReward" EntityType="Self.ConfigReward" />
+          <AssociationSet Name="FK__AdProcess__AdPro__6754599E" Association="Self.FK__AdProcess__AdPro__6754599E">
+            <End Role="AdProcessType" EntitySet="AdProcessType" />
+            <End Role="AdProcess" EntitySet="AdProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdProcess__AdPro__693CA210" Association="Self.FK__AdProcess__AdPro__693CA210">
+            <End Role="AdProcess" EntitySet="AdProcess" />
+            <End Role="AdProcessDetail" EntitySet="AdProcessDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdProcess__UserI__66603565" Association="Self.FK__AdProcess__UserI__66603565">
+            <End Role="User" EntitySet="User" />
+            <End Role="AdProcess" EntitySet="AdProcess" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdProcess__AdPro__6A30C649" Association="Self.FK__AdProcess__AdPro__6A30C649">
+            <End Role="AdProcessTypeDetail" EntitySet="AdProcessTypeDetail" />
+            <End Role="AdProcessDetail" EntitySet="AdProcessDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SessionTo__UserI__5DCAEF64" Association="Self.FK__SessionTo__UserI__5DCAEF64">
+            <End Role="User" EntitySet="User" />
+            <End Role="SessionToken" EntitySet="SessionToken" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__Affiliated__534D60F1" Association="Self.FK__User__Affiliated__534D60F1">
+            <End Role="User" EntitySet="User" />
+            <End Role="User1" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wallet__UserId__5812160E" Association="Self.FK__Wallet__UserId__5812160E">
+            <End Role="User" EntitySet="User" />
+            <End Role="Wallet" EntitySet="Wallet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Withdrawa__Walle__5AEE82B9" Association="Self.FK__Withdrawa__Walle__5AEE82B9">
+            <End Role="Wallet" EntitySet="Wallet" />
+            <End Role="Withdrawal" EntitySet="Withdrawal" />
+          </AssociationSet>
+          <EntitySet Name="ConfigGeneral" EntityType="CryptoGenesisModel.ConfigGeneral" />
+        </EntityContainer>
+        <EntityType Name="ConfigGeneral">
+          <Key>
+            <PropertyRef Name="AllowedVersion" />
+          </Key>
+          <Property Name="AllowedVersion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CryptoGenesisModelStoreContainer" CdmEntityContainer="CryptoGenesisEntities">
+          <EntitySetMapping Name="AdProcess">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.AdProcess">
+              <MappingFragment StoreEntitySet="AdProcess">
+                <ScalarProperty Name="AdProcessId" ColumnName="AdProcessId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AdProcessTypeId" ColumnName="AdProcessTypeId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdProcessType">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.AdProcessType">
+              <MappingFragment StoreEntitySet="AdProcessType">
+                <ScalarProperty Name="AdProcessTypeId" ColumnName="AdProcessTypeId" />
+                <ScalarProperty Name="AdProcessTypeName" ColumnName="AdProcessTypeName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdProcessTypeDetail">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.AdProcessTypeDetail">
+              <MappingFragment StoreEntitySet="AdProcessTypeDetail">
+                <ScalarProperty Name="AdProcessTypeDetailId" ColumnName="AdProcessTypeDetailId" />
+                <ScalarProperty Name="AdProcessTypeDetailName" ColumnName="AdProcessTypeDetailName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SessionToken">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.SessionToken">
+              <MappingFragment StoreEntitySet="SessionToken">
+                <ScalarProperty Name="SessionTokenId" ColumnName="SessionTokenId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TokenString" ColumnName="TokenString" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="ReferredCode" ColumnName="ReferredCode" />
+                <ScalarProperty Name="AffiliatedBy" ColumnName="AffiliatedBy" />
+                <ScalarProperty Name="EmailVerified" ColumnName="EmailVerified" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wallet">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.Wallet">
+              <MappingFragment StoreEntitySet="Wallet">
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="WalletId" ColumnName="WalletId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="FreezeBalance" ColumnName="FreezeBalance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Withdrawal">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.Withdrawal">
+              <MappingFragment StoreEntitySet="Withdrawal">
+                <ScalarProperty Name="WithdrawalId" ColumnName="WithdrawalId" />
+                <ScalarProperty Name="WalletId" ColumnName="WalletId" />
+                <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdProcessDetail">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.AdProcessDetail">
+              <MappingFragment StoreEntitySet="AdProcessDetail">
+                <ScalarProperty Name="RowId" ColumnName="RowId" />
+                <ScalarProperty Name="AdProcessId" ColumnName="AdProcessId" />
+                <ScalarProperty Name="AdProcessTypeDetailId" ColumnName="AdProcessTypeDetailId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigReward">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.ConfigReward">
+              <MappingFragment StoreEntitySet="ConfigReward">
+                <ScalarProperty Name="CurrStandarRewardPerAdTether" ColumnName="CurrStandarRewardPerAdTether" />
+                <ScalarProperty Name="CurrStandarRewardPerAdDalion" ColumnName="CurrStandarRewardPerAdDalion" />
+                <ScalarProperty Name="MinTimeStandarReward" ColumnName="MinTimeStandarReward" />
+                <ScalarProperty Name="MinWithdrawalAmountTether" ColumnName="MinWithdrawalAmountTether" />
+                <ScalarProperty Name="MinWithdrawalAmountDalion" ColumnName="MinWithdrawalAmountDalion" />
+                <ScalarProperty Name="RewardByReferredPercent" ColumnName="RewardByReferredPercent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigGeneral">
+            <EntityTypeMapping TypeName="CryptoGenesisModel.ConfigGeneral">
+              <MappingFragment StoreEntitySet="ConfigGeneral">
+                <ScalarProperty Name="AllowedVersion" ColumnName="AllowedVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

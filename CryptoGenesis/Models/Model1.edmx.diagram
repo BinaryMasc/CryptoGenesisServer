@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="57c42026d32e48a19446a4c4886701ca" Name="Diagram1">
+        <EntityTypeShape EntityType="CryptoGenesisModel.AdProcess" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.AdProcessType" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.AdProcessTypeDetail" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.SessionToken" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.User" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.Wallet" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.Withdrawal" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.AdProcessDetail" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.ConfigReward" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__AdProcess__AdPro__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__AdProcess__AdPro__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__AdProcess__UserI__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__AdProcess__AdPro__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__SessionTo__UserI__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__User__Affiliated__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__Wallet__UserId__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptoGenesisModel.FK__Withdrawa__Walle__5AEE82B9" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CryptoGenesisModel.ConfigGeneral" Width="1.5" PointX="8.375" PointY="5.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
