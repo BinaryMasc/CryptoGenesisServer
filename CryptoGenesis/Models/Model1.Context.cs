@@ -29,7 +29,6 @@ namespace CryptoGenesis.Models
         public virtual DbSet<AdProcessType> AdProcessType { get; set; }
         public virtual DbSet<AdProcessTypeDetail> AdProcessTypeDetail { get; set; }
         public virtual DbSet<SessionToken> SessionToken { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Wallet> Wallet { get; set; }
         public virtual DbSet<Withdrawal> Withdrawal { get; set; }

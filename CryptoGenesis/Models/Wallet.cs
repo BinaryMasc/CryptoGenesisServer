@@ -26,6 +26,7 @@ namespace CryptoGenesis.Models
         public decimal Balance { get; set; }
         public decimal FreezeBalance { get; set; }
         public decimal Credit { get; set; }
+        public string BlockChainAddress { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

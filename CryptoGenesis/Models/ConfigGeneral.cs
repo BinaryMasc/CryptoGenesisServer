@@ -15,5 +15,6 @@ namespace CryptoGenesis.Models
     public partial class ConfigGeneral
     {
         public string AllowedVersion { get; set; }
+        public bool MaintenanceMode { get; set; }
     }
 }

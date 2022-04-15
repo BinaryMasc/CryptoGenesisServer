@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="CryptoGenesisModel.AdProcessType" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CryptoGenesisModel.AdProcessTypeDetail" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CryptoGenesisModel.SessionToken" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CryptoGenesisModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="CryptoGenesisModel.User" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CryptoGenesisModel.Wallet" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="CryptoGenesisModel.Withdrawal" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />

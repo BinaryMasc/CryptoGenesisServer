@@ -26,7 +26,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.AdProcessDetail' no tiene 
           <Property Name="RowId" Type="int" Nullable="false" />
           <Property Name="AdProcessId" Type="bigint" Nullable="false" />
           <Property Name="AdProcessTypeDetailId" Type="int" Nullable="false" />
-          <Property Name="Amount" Type="money" />
+          <Property Name="Amount" Type="decimal" Precision="15" Scale="10" />
           <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AdProcessType">
@@ -50,8 +50,10 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigGeneral' no tiene de
         <EntityType Name="ConfigGeneral">
           <Key>
             <PropertyRef Name="AllowedVersion" />
+            <PropertyRef Name="MaintenanceMode" />
           </Key>
           <Property Name="AllowedVersion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaintenanceMode" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -64,11 +66,11 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             <PropertyRef Name="MinWithdrawalAmountDalion" />
             <PropertyRef Name="RewardByReferredPercent" />
           </Key>
-          <Property Name="CurrStandarRewardPerAdTether" Type="money" Nullable="false" />
-          <Property Name="CurrStandarRewardPerAdDalion" Type="money" Nullable="false" />
+          <Property Name="CurrStandarRewardPerAdTether" Type="decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="CurrStandarRewardPerAdDalion" Type="decimal" Precision="15" Scale="10" Nullable="false" />
           <Property Name="MinTimeStandarReward" Type="int" Nullable="false" />
-          <Property Name="MinWithdrawalAmountTether" Type="money" Nullable="false" />
-          <Property Name="MinWithdrawalAmountDalion" Type="money" Nullable="false" />
+          <Property Name="MinWithdrawalAmountTether" Type="decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="MinWithdrawalAmountDalion" Type="decimal" Precision="15" Scale="10" Nullable="false" />
           <Property Name="RewardByReferredPercent" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="SessionToken">
@@ -101,9 +103,10 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <Property Name="WalletId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="CurrencyId" Type="varchar" MaxLength="5" />
-          <Property Name="Balance" Type="money" Nullable="false" />
-          <Property Name="FreezeBalance" Type="money" Nullable="false" />
-          <Property Name="Credit" Type="money" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="FreezeBalance" Type="decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="Credit" Type="decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="BlockChainAddress" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Withdrawal">
           <Key>
@@ -112,10 +115,10 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <Property Name="WithdrawalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WalletId" Type="int" Nullable="false" />
           <Property Name="CurrencyId" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="15" Scale="10" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__AdProcess__AdPro__693CA210">
+        <Association Name="FK__AdProcess__AdPro__6A30C649">
           <End Role="AdProcessType" Type="Self.AdProcessType" Multiplicity="1" />
           <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="*" />
           <ReferentialConstraint>
@@ -127,7 +130,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AdProcess__AdPro__6B24EA82">
+        <Association Name="FK__AdProcess__AdPro__6C190EBB">
           <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="1" />
           <End Role="AdProcessDetail" Type="Self.AdProcessDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -139,7 +142,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AdProcess__AdPro__6C190EBB">
+        <Association Name="FK__AdProcess__AdPro__6D0D32F4">
           <End Role="AdProcessTypeDetail" Type="Self.AdProcessTypeDetail" Multiplicity="1" />
           <End Role="AdProcessDetail" Type="Self.AdProcessDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -151,7 +154,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AdProcess__UserI__68487DD7">
+        <Association Name="FK__AdProcess__UserI__693CA210">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="AdProcess" Type="Self.AdProcess" Multiplicity="*" />
           <ReferentialConstraint>
@@ -163,7 +166,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SessionTo__UserI__5FB337D6">
+        <Association Name="FK__SessionTo__UserI__60A75C0F">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="SessionToken" Type="Self.SessionToken" Multiplicity="*" />
           <ReferentialConstraint>
@@ -175,7 +178,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__Affiliated__5441852A">
+        <Association Name="FK__User__Affiliated__5535A963">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="User1" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -187,7 +190,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Wallet__UserId__59FA5E80">
+        <Association Name="FK__Wallet__UserId__5AEE82B9">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Wallet" Type="Self.Wallet" Multiplicity="*" />
           <ReferentialConstraint>
@@ -199,7 +202,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Withdrawa__Walle__5CD6CB2B">
+        <Association Name="FK__Withdrawa__Walle__5DCAEF64">
           <End Role="Wallet" Type="Self.Wallet" Multiplicity="1" />
           <End Role="Withdrawal" Type="Self.Withdrawal" Multiplicity="*" />
           <ReferentialConstraint>
@@ -230,7 +233,8 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           </EntitySet>
           <EntitySet Name="ConfigGeneral" EntityType="Self.ConfigGeneral" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [ConfigGeneral].[AllowedVersion] AS [AllowedVersion]
+    [ConfigGeneral].[AllowedVersion] AS [AllowedVersion], 
+    [ConfigGeneral].[MaintenanceMode] AS [MaintenanceMode]
     FROM [dbo].[ConfigGeneral] AS [ConfigGeneral]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ConfigReward" EntityType="Self.ConfigReward" store:Type="Tables" store:Schema="dbo">
@@ -243,35 +247,35 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
     [ConfigReward].[RewardByReferredPercent] AS [RewardByReferredPercent]
     FROM [dbo].[ConfigReward] AS [ConfigReward]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__AdProcess__AdPro__693CA210" Association="Self.FK__AdProcess__AdPro__693CA210">
+          <AssociationSet Name="FK__AdProcess__AdPro__6A30C649" Association="Self.FK__AdProcess__AdPro__6A30C649">
             <End Role="AdProcessType" EntitySet="AdProcessType" />
             <End Role="AdProcess" EntitySet="AdProcess" />
           </AssociationSet>
-          <AssociationSet Name="FK__AdProcess__AdPro__6B24EA82" Association="Self.FK__AdProcess__AdPro__6B24EA82">
+          <AssociationSet Name="FK__AdProcess__AdPro__6C190EBB" Association="Self.FK__AdProcess__AdPro__6C190EBB">
             <End Role="AdProcess" EntitySet="AdProcess" />
             <End Role="AdProcessDetail" EntitySet="AdProcessDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__AdProcess__AdPro__6C190EBB" Association="Self.FK__AdProcess__AdPro__6C190EBB">
+          <AssociationSet Name="FK__AdProcess__AdPro__6D0D32F4" Association="Self.FK__AdProcess__AdPro__6D0D32F4">
             <End Role="AdProcessTypeDetail" EntitySet="AdProcessTypeDetail" />
             <End Role="AdProcessDetail" EntitySet="AdProcessDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__AdProcess__UserI__68487DD7" Association="Self.FK__AdProcess__UserI__68487DD7">
+          <AssociationSet Name="FK__AdProcess__UserI__693CA210" Association="Self.FK__AdProcess__UserI__693CA210">
             <End Role="User" EntitySet="User" />
             <End Role="AdProcess" EntitySet="AdProcess" />
           </AssociationSet>
-          <AssociationSet Name="FK__SessionTo__UserI__5FB337D6" Association="Self.FK__SessionTo__UserI__5FB337D6">
+          <AssociationSet Name="FK__SessionTo__UserI__60A75C0F" Association="Self.FK__SessionTo__UserI__60A75C0F">
             <End Role="User" EntitySet="User" />
             <End Role="SessionToken" EntitySet="SessionToken" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__Affiliated__5441852A" Association="Self.FK__User__Affiliated__5441852A">
+          <AssociationSet Name="FK__User__Affiliated__5535A963" Association="Self.FK__User__Affiliated__5535A963">
             <End Role="User" EntitySet="User" />
             <End Role="User1" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__Wallet__UserId__59FA5E80" Association="Self.FK__Wallet__UserId__59FA5E80">
+          <AssociationSet Name="FK__Wallet__UserId__5AEE82B9" Association="Self.FK__Wallet__UserId__5AEE82B9">
             <End Role="User" EntitySet="User" />
             <End Role="Wallet" EntitySet="Wallet" />
           </AssociationSet>
-          <AssociationSet Name="FK__Withdrawa__Walle__5CD6CB2B" Association="Self.FK__Withdrawa__Walle__5CD6CB2B">
+          <AssociationSet Name="FK__Withdrawa__Walle__5DCAEF64" Association="Self.FK__Withdrawa__Walle__5DCAEF64">
             <End Role="Wallet" EntitySet="Wallet" />
             <End Role="Withdrawal" EntitySet="Withdrawal" />
           </AssociationSet>
@@ -320,16 +324,6 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="Self.FK__SessionTo__UserI__5DCAEF64" FromRole="SessionToken" ToRole="User" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -356,11 +350,12 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <Property Name="WalletId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="CurrencyId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="FreezeBalance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="FreezeBalance" Type="Decimal" Precision="15" Scale="10" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK__Wallet__UserId__5812160E" FromRole="Wallet" ToRole="User" />
           <NavigationProperty Name="Withdrawal" Relationship="Self.FK__Withdrawa__Walle__5AEE82B9" FromRole="Wallet" ToRole="Withdrawal" />
-          <Property Name="Credit" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Credit" Type="Decimal" Nullable="false" Precision="15" Scale="10" />
+          <Property Name="BlockChainAddress" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Withdrawal">
           <Key>
@@ -369,7 +364,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <Property Name="WithdrawalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WalletId" Type="Int32" Nullable="false" />
           <Property Name="CurrencyId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="15" Scale="10" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Wallet" Relationship="Self.FK__Withdrawa__Walle__5AEE82B9" FromRole="Withdrawal" ToRole="Wallet" />
         </EntityType>
@@ -383,7 +378,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <Property Name="RowId" Type="Int32" Nullable="false" />
           <Property Name="AdProcessId" Type="Int64" Nullable="false" />
           <Property Name="AdProcessTypeDetailId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Precision="15" Scale="10" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AdProcess" Relationship="Self.FK__AdProcess__AdPro__693CA210" FromRole="AdProcessDetail" ToRole="AdProcess" />
           <NavigationProperty Name="AdProcessTypeDetail" Relationship="Self.FK__AdProcess__AdPro__6A30C649" FromRole="AdProcessDetail" ToRole="AdProcessTypeDetail" />
@@ -397,11 +392,11 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
             <PropertyRef Name="MinWithdrawalAmountDalion" />
             <PropertyRef Name="RewardByReferredPercent" />
           </Key>
-          <Property Name="CurrStandarRewardPerAdTether" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="CurrStandarRewardPerAdDalion" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CurrStandarRewardPerAdTether" Type="Decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="CurrStandarRewardPerAdDalion" Type="Decimal" Precision="15" Scale="10" Nullable="false" />
           <Property Name="MinTimeStandarReward" Type="Int32" Nullable="false" />
-          <Property Name="MinWithdrawalAmountTether" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="MinWithdrawalAmountDalion" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="MinWithdrawalAmountTether" Type="Decimal" Precision="15" Scale="10" Nullable="false" />
+          <Property Name="MinWithdrawalAmountDalion" Type="Decimal" Precision="15" Scale="10" Nullable="false" />
           <Property Name="RewardByReferredPercent" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK__AdProcess__AdPro__6754599E">
@@ -505,7 +500,6 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <EntitySet Name="AdProcessType" EntityType="Self.AdProcessType" />
           <EntitySet Name="AdProcessTypeDetail" EntityType="Self.AdProcessTypeDetail" />
           <EntitySet Name="SessionToken" EntityType="Self.SessionToken" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="User" EntityType="Self.User" />
           <EntitySet Name="Wallet" EntityType="Self.Wallet" />
           <EntitySet Name="Withdrawal" EntityType="Self.Withdrawal" />
@@ -548,8 +542,10 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
         <EntityType Name="ConfigGeneral">
           <Key>
             <PropertyRef Name="AllowedVersion" />
+            <PropertyRef Name="MaintenanceMode" />
           </Key>
           <Property Name="AllowedVersion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaintenanceMode" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -613,6 +609,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <EntitySetMapping Name="Wallet">
             <EntityTypeMapping TypeName="CryptoGenesisModel.Wallet">
               <MappingFragment StoreEntitySet="Wallet">
+                <ScalarProperty Name="BlockChainAddress" ColumnName="BlockChainAddress" />
                 <ScalarProperty Name="Credit" ColumnName="Credit" />
                 <ScalarProperty Name="WalletId" ColumnName="WalletId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -659,6 +656,7 @@ advertencia 6002: La tabla o vista 'CryptoGenesis.dbo.ConfigReward' no tiene def
           <EntitySetMapping Name="ConfigGeneral">
             <EntityTypeMapping TypeName="CryptoGenesisModel.ConfigGeneral">
               <MappingFragment StoreEntitySet="ConfigGeneral">
+                <ScalarProperty Name="MaintenanceMode" ColumnName="MaintenanceMode" />
                 <ScalarProperty Name="AllowedVersion" ColumnName="AllowedVersion" />
               </MappingFragment>
             </EntityTypeMapping>
